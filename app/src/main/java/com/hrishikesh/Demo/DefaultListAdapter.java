@@ -22,7 +22,6 @@ public class DefaultListAdapter extends ArrayAdapter<DemoItem> implements DemoAd
 
     private final LayoutInflater layoutInflater;
 
-
     public DefaultListAdapter(Context context, List<DemoItem> items) {
         super(context, 0, items);
         layoutInflater = LayoutInflater.from(context);
@@ -51,6 +50,19 @@ public class DefaultListAdapter extends ArrayAdapter<DemoItem> implements DemoAd
         ImageView imageView;
         imageView = (ImageView) v.findViewById(R.id.imageView);
         Glide.with(getContext()).load(item.getUrl()).into(imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.isPressed()) {
+                    view.setScaleY((float)0.9);
+                    view.setScaleX((float)0.9);
+                }else{
+                    view.setScaleY(1);
+                    view.setScaleX(1);
+                }
+            }
+        });
         return v;
     }
 

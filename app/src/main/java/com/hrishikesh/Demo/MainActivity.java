@@ -1,7 +1,11 @@
 package com.hrishikesh.Demo;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.felipecsl.asymmetricgridview.library.Utils;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView;
@@ -32,6 +36,27 @@ public class MainActivity extends AppCompatActivity {
         listView.setRequestedHorizontalSpacing(Utils.dpToPx(this, 3));
         listView.setAdapter(getNewAdapter());
         listView.setDebugging(true);
+        ImageButton imageButton1 = (ImageButton) findViewById(R.id.button1);
+        imageButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation1,R.anim.animation2).toBundle();
+                startActivity(intent, bndlanimation);
+
+            }
+        });
+        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3);
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3,R.anim.animation4).toBundle();
+                startActivity(intent, bndlanimation);
+
+            }
+        });
+
 
 /*
         db.addShop(new Shop(1,"Dockers","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/storefront27.jpg?alt=media&token=4ea27811-4e06-4bf5-8b96-44a583040088",""));
