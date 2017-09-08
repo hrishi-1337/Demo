@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hrishikesh.Demo.LocationActivity">
+    tools:context="com.hrishikesh.Demo.LocationActivity">>
 
-</android.support.constraint.ConstraintLayout>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="458dp"
+        android:id="@+id/map"
+        tools:context=".MapLocationActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        map:cameraZoom="21"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose this Location" />
+
+</LinearLayout>
