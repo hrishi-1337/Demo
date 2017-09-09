@@ -1,6 +1,7 @@
 package com.hrishikesh.Demo;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,7 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,10 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,18 +45,15 @@ public class LocationActivity extends AppCompatActivity
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
-    Marker mCurrLocation;
-    Marker mCurrLocationMarker;
+    LatLng mPosition;
     Location mLastLocation;
+    double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
-        getSupportActionBar().setTitle("Your Location");
-
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
     }
@@ -86,6 +84,15 @@ public class LocationActivity extends AppCompatActivity
                 //Location Permission already granted
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
+
+                mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                    @Override
+                    public void onCameraIdle() {
+                        mPosition = mGoogleMap.getCameraPosition().target;
+                        lat = mPosition.latitude;
+                        lng = mPosition.longitude;
+                        }
+                });
             } else {
                 //Request Location Permission
                 checkLocationPermission();
@@ -116,8 +123,15 @@ public class LocationActivity extends AppCompatActivity
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
+         }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            lat = mLastLocation.getLatitude();
+            lng = mLastLocation.getLongitude();
+            LatLng loc = new LatLng(lat, lng);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
-
        /* Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             //place marker at current position
@@ -133,10 +147,8 @@ public class LocationActivity extends AppCompatActivity
         } */
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {}
 
-
+/*
     @Override
     public void onLocationChanged(Location location)
     {
@@ -163,8 +175,14 @@ public class LocationActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-    }
+    }*/
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -269,8 +287,31 @@ public class LocationActivity extends AppCompatActivity
         geocoder = new Geocoder(this, Locale.getDefault());
         addresses = geocoder.getFromLocation(lat,lon, 1);
         String address = addresses.get(0).getAddressLine(1);
-        Button button = (Button) findViewById(R.id.button4);
-        button.setText("Choose: "+address);
+        //Button button = (Button) findViewById(R.id.button4);
+        //button.setText("Choose: "+address);
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.map_item:
+                Intent intent = new Intent(this, MainActivity.class);
+                this.startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
     }
 }
 
