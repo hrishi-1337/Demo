@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         listView.setRequestedHorizontalSpacing(Utils.dpToPx(this, 3));
         listView.setAdapter(getNewAdapter());
         listView.setDebugging(true);
-        ImageButton imageButton1 = (ImageButton) findViewById(R.id.button3); //TODO: Quick Return
-        imageButton1.setOnClickListener(new View.OnClickListener() {
+        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3); //TODO: Quick Return
+        imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);

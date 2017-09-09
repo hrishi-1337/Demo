@@ -1,69 +1,130 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context="com.hrishikesh.Demo.LoginActivity">
 
-    <LinearLayout
-        android:id="@+id/llProfile"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:visibility="gone">
+        android:layout_above="@+id/google_sign_in"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="19dp"
+        android:text="OR"
+        android:textSize="30sp" />
+
+    <RelativeLayout
+        android:id="@+id/google_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="96dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true">
 
         <ImageView
-            android:id="@+id/imgProfilePic"
-            android:layout_width="80dp"
+            android:id="@+id/iv_google"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:padding="20dp"
+            android:src="@drawable/google_icon"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/tv_google"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/iv_google"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Sign in with Google"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:layout_toRightOf="@+id/iv_google" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_above="@+id/google_sign_in"
+        android:id="@+id/relativeLayout">
+
+        <Button
+            android:id="@+id/button_verify_phone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_alignBaseline="@+id/button_start_verification"
+            android:layout_alignBottom="@+id/button_start_verification"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1.0"
+            android:alpha="0"
+            android:text="@string/verify_phone_auth"
+            android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button_start_verification"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical"
-            android:layout_weight="2" >
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="101dp"
+            android:layout_toEndOf="@+id/button_verify_phone"
+            android:layout_toRightOf="@+id/button_verify_phone"
+            android:layout_weight="1.0"
+            android:text="@string/start_phone_auth"
+            android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textSize="20dp" />
+        <EditText
+            android:id="@+id/field_verification_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/field_phone_number"
+            android:layout_alignBottom="@+id/field_phone_number"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:hint="@string/hint_verification_code"
+            android:inputType="number"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/txtEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textSize="18dp" />
-        </LinearLayout>
-    </LinearLayout>
+        <EditText
+            android:id="@+id/field_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_phone_number"
+            android:inputType="phone"
+            android:visibility="visible"
+            android:layout_above="@+id/button_start_verification"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_sign_in"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/button_resend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="99dp"
+            android:layout_toEndOf="@+id/button_verify_phone"
+            android:layout_toRightOf="@+id/button_verify_phone"
+            android:layout_weight="1.0"
+            android:elevation="0dp"
+            android:text="@string/resend_phone_auth"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/btn_sign_out"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_logout_from_google"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_revoke_access"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_revoke_access"
-        android:visibility="gone" />
-
-</LinearLayout>
-
+</RelativeLayout>
