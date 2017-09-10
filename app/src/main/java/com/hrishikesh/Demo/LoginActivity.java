@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressDialog dialog;
     boolean boolean_google;
     RelativeLayout google;
+    TextView mSkip;
     EditText mPhoneNumberField, mVerificationField;
     Button mStartButton, mVerifyButton, mResendButton;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -76,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mStartButton = (Button) findViewById(R.id.button_start_verification);
         mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
         mResendButton = (Button) findViewById(R.id.button_resend);
+
+        mSkip = (TextView) findViewById(R.id.skip);
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -145,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
         mResendButton.setOnClickListener(this);
+        mSkip.setOnClickListener(this);
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
@@ -340,6 +345,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.button_resend:
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
+                break;
+            case R.id.skip:
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 break;
         }
     }

@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="false"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="30dp"
         android:text="OR"
         android:textSize="30sp" />
 
@@ -20,37 +20,38 @@
         android:id="@+id/google_sign_in"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginBottom="96dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="110dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="#ffffff"
         android:clickable="true"
-        android:elevation="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true">
+        android:elevation="5dp">
 
         <ImageView
             android:id="@+id/iv_google"
             android:layout_width="102dp"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:padding="20dp"
-            android:src="@drawable/google_icon"
-            android:layout_alignParentLeft="true" />
+            android:src="@drawable/google_icon" />
 
         <TextView
             android:id="@+id/tv_google"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/iv_google"
+            android:layout_toRightOf="@+id/iv_google"
+            android:elevation="1dp"
             android:gravity="center_vertical|center_horizontal"
             android:text="Sign in with Google"
             android:textColor="#000"
-            android:textSize="25sp"
-            android:layout_toRightOf="@+id/iv_google" />
+            android:textSize="25sp" />
 
     </RelativeLayout>
 
@@ -79,13 +80,12 @@
             android:id="@+id/button_start_verification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="101dp"
-            android:layout_toEndOf="@+id/button_verify_phone"
-            android:layout_toRightOf="@+id/button_verify_phone"
+            android:layout_marginBottom="73dp"
             android:layout_weight="1.0"
             android:text="@string/start_phone_auth"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/field_verification_code"
@@ -108,8 +108,8 @@
             android:hint="@string/hint_phone_number"
             android:inputType="phone"
             android:visibility="visible"
+            android:layout_marginBottom="23dp"
             android:layout_above="@+id/button_start_verification"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <Button
@@ -126,5 +126,16 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/google_sign_in"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:elevation="5dp"
+        android:text="SKIP"
+        android:textSize="20sp" />
 
 </RelativeLayout>

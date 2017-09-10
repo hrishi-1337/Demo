@@ -4,10 +4,12 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 
 import com.felipecsl.asymmetricgridview.library.Utils;
@@ -39,7 +41,32 @@ public class MainActivity extends AppCompatActivity {
         listView.setRequestedHorizontalSpacing(Utils.dpToPx(this, 3));
         listView.setAdapter(getNewAdapter());
         listView.setDebugging(true);
-        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3); //TODO: Quick Return
+        listView.setNestedScrollingEnabled(true);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+                if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    Log.i("SCROLLING DOWN","TRUE");
+                }
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    Log.i("SCROLLING UP","TRUE");
+                }
+                mLastFirstVisibleItem=firstVisibleItem;
+
+            }
+        });
+        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3);
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-     /*  ImageButton imageButton3 = (ImageButton) findViewById(R.id.button2);
+     /*  ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         db.addShop(new Shop(2,"Dunkin Donuts","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/dunkin.jpg?alt=media&token=f63c6d5f-b074-47ae-a8ca-6f7974ddbd47",""));
         db.addShop(new Shop(3,"Pizza Parlor","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download.jpg?alt=media&token=1eb9a9bb-495d-416b-9a84-3699214149b9",""));
         db.addShop(new Shop(4,"Town Bakers","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download%20(1).jpg?alt=media&token=01b16918-272f-4a9f-9607-61f559d30360",""));
-  */
+*/
     }
     public boolean onCreateOptionsMenu(Menu menu) {
 
