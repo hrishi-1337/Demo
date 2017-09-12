@@ -70,17 +70,6 @@ public class MainActivity extends AppCompatActivity {
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3,R.anim.animation4).toBundle();
-                startActivity(intent, bndlanimation);
-
-            }
-        });
-
-     /*  ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3,R.anim.animation4).toBundle();
                 startActivity(intent, bndlanimation);
@@ -88,7 +77,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3,R.anim.animation4).toBundle();
+                startActivity(intent, bndlanimation);
 
+            }
+        });
+
+/*
 
         db.addShop(new Shop(1,"Dockers","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/storefront27.jpg?alt=media&token=4ea27811-4e06-4bf5-8b96-44a583040088",""));
         db.addShop(new Shop(2,"Dunkin Donuts","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/dunkin.jpg?alt=media&token=f63c6d5f-b074-47ae-a8ca-6f7974ddbd47",""));

@@ -56,11 +56,10 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
     // Getting one shop
-    public Shop getShop(int id) {
+    public Shop getShop(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_SHOPS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_SH_ADDR,KEY_SH_URL }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                        KEY_NAME, KEY_SH_ADDR,KEY_SH_URL }, KEY_NAME + "=?",new String[] { String.valueOf(name) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         Shop contact = new Shop(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3));

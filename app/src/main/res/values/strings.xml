@@ -8,4 +8,6 @@
     <string name="start_phone_auth">Enter</string>
     <string name="verify_phone_auth">Verify</string>
     <string name="resend_phone_auth">Resend</string>
+    <string name="search_hint">Search for businesses</string>
+    <string name="action_licenses">Open Source Licenses</string>
 </resources>
