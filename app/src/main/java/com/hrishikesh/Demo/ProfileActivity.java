@@ -4,8 +4,10 @@ package com.hrishikesh.Demo;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -13,19 +15,72 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+
 public class ProfileActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private GoogleApiClient mGoogleApiClient;
     Button login;
+    Button logout;
+    TextView welcome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        login = (Button) findViewById(R.id.login);
+        logout = (Button) findViewById(R.id.logout);
+        welcome = (TextView) findViewById(R.id.welcome);
+        FirebaseAuth firebaseAuth = mAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+       FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (user != null) {
+                    String name = "Welcome " + user.getDisplayName();
+                    Log.e("Name",name);
+                    welcome.setText(name);
+                    login.setVisibility(View.GONE);
+                    welcome.setVisibility(View.VISIBLE);
+                    logout.setVisibility(View.VISIBLE);
+                } else {
+                    login.setVisibility(View.VISIBLE);
+                    welcome.setVisibility(View.VISIBLE);
+                    logout.setVisibility(View.GONE);
+                }
+            }
+        };
+       if (user != null) {
+           String name = "Welcome " + user.getDisplayName();
+           Log.e("Name",name);
+           welcome.setText(name);
+           login.setVisibility(View.GONE);
+           welcome.setVisibility(View.VISIBLE);
+           logout.setVisibility(View.VISIBLE);
+       } else {
+           login.setVisibility(View.VISIBLE);
+           welcome.setVisibility(View.VISIBLE);
+           logout.setVisibility(View.GONE);
+       }
 
-        Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
 
             }
         });
@@ -70,4 +125,18 @@ public class ProfileActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+
+                    }
+                });
+    }
+
  }
