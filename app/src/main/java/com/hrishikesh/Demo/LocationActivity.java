@@ -47,7 +47,10 @@ public class LocationActivity extends AppCompatActivity
     GoogleApiClient mGoogleApiClient;
     LatLng mPosition;
     Location mLastLocation;
-    double lat, lng;
+    double lat;
+    double lng;
+    boolean chosen = false;
+    double chosenLat,chosenLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -89,8 +92,8 @@ public class LocationActivity extends AppCompatActivity
                     @Override
                     public void onCameraIdle() {
                         mPosition = mGoogleMap.getCameraPosition().target;
-                        lat = mPosition.latitude;
-                        lng = mPosition.longitude;
+                        chosenLat = mPosition.latitude;
+                        chosenLng = mPosition.longitude;
                         }
                 });
             } else {
@@ -301,6 +304,9 @@ public class LocationActivity extends AppCompatActivity
         switch(item.getItemId()) {
             case R.id.map_item:
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("chosenLat",chosenLat);
+                intent.putExtra("chosenLng",chosenLng);
+                intent.putExtra("chosen",chosen);
                 this.startActivity(intent);
                 break;
             default:

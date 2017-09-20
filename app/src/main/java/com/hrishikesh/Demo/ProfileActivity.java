@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -30,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button login;
     Button logout;
     TextView welcome;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +43,11 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (user != null) {
-                    String name = "Welcome " + user.getDisplayName();
-                    Log.e("Name",name);
+                    if(user.getDisplayName() != null) {
+                        name = "Welcome " + user.getDisplayName();
+                    }else{
+                        name = "Welcome ";
+                    }
                     welcome.setText(name);
                     login.setVisibility(View.GONE);
                     welcome.setVisibility(View.VISIBLE);
@@ -57,8 +60,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
        if (user != null) {
-           String name = "Welcome " + user.getDisplayName();
-           Log.e("Name",name);
+           if(user.getDisplayName() != null) {
+               name = "Welcome " + user.getDisplayName();
+           }else{
+               name = "Welcome ";
+           }
            welcome.setText(name);
            login.setVisibility(View.GONE);
            welcome.setVisibility(View.VISIBLE);
