@@ -87,15 +87,14 @@ public class LocationActivity extends AppCompatActivity
                 //Location Permission already granted
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
-
-                mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+               /* mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                     @Override
                     public void onCameraIdle() {
                         mPosition = mGoogleMap.getCameraPosition().target;
                         chosenLat = mPosition.latitude;
                         chosenLng = mPosition.longitude;
                         }
-                });
+                }); */
             } else {
                 //Request Location Permission
                 checkLocationPermission();
@@ -304,6 +303,10 @@ public class LocationActivity extends AppCompatActivity
         switch(item.getItemId()) {
             case R.id.map_item:
                 Intent intent = new Intent(this, MainActivity.class);
+                chosen = true;
+                mPosition = mGoogleMap.getCameraPosition().target;
+                chosenLat = mPosition.latitude;
+                chosenLng = mPosition.longitude;
                 intent.putExtra("chosenLat",chosenLat);
                 intent.putExtra("chosenLng",chosenLng);
                 intent.putExtra("chosen",chosen);

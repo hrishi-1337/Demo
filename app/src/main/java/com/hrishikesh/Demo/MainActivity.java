@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.felipecsl.asymmetricgridview.library.Utils;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView;
@@ -42,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     //double lng = 72.879781;
     double lat,lng;
     boolean chosen1 = false;
-    boolean connected= false;
     DBHandler db = new DBHandler(this);
+    List<Shop> shops;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +62,72 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if(chosen1){
             lat = getIntent().getDoubleExtra("chosenLat", 0.0);
             lng = getIntent().getDoubleExtra("chosenLng", 0.0);
-            Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
+            List<DemoItem> items = new ArrayList<>();
+            List<Shop> shops = db.getShops(lat,lng);
+            int a[] = {4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 4, 2, 2, 2, 3, 3};
+            int j = 0;
+            for (Shop shop : shops) {
+                if (j <= 15) {
+                    DemoItem item = new DemoItem(a[j], a[j], shop.getId(), shop.getName(), shop.getUrl());
+                    items.add(item);
+                    j++;
+                } else
+                    j = 0;
+            }
+
+            adapter = new DefaultListAdapter(this, items);
+
+
+            listView.setRequestedColumnCount(6);
+            listView.setRequestedHorizontalSpacing(Utils.dpToPx(this, 3));
+            listView.setAdapter(getNewAdapter());
+            listView.setDebugging(true);
+            listView.setNestedScrollingEnabled(true);
+            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                private int mLastFirstVisibleItem;
+
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem,
+                                     int visibleItemCount, int totalItemCount) {
+
+                    if (mLastFirstVisibleItem < firstVisibleItem) {
+                        Log.i("SCROLLING DOWN", "TRUE");
+                    }
+                    if (mLastFirstVisibleItem > firstVisibleItem) {
+                        Log.i("SCROLLING UP", "TRUE");
+                    }
+                    mLastFirstVisibleItem = firstVisibleItem;
+
+                }
+            });
         }
 
+        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3);
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
+                startActivity(intent, bndlanimation);
+
+            }
+        });
+
+        ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
+                startActivity(intent, bndlanimation);
+            }
+        });
 
         //Toast.makeText(this, lat + " and " + lng, Toast.LENGTH_LONG).show();
 
@@ -100,26 +162,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 mLastFirstVisibleItem = firstVisibleItem;
 
-            }
-        });
-        ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3);
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
-                startActivity(intent, bndlanimation);
-
-            }
-        });
-
-        ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
-                startActivity(intent, bndlanimation);
             }
         }); */
 
@@ -186,31 +228,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null && !chosen1) {
-            lat = mLastLocation.getLatitude();
-            lng = mLastLocation.getLongitude();
-            connected = true;
+            //if(!chosen1) {
+                lat = mLastLocation.getLatitude();
+                lng = mLastLocation.getLongitude();
+            //}
             //LatLng loc = new LatLng(lat, lng);
-            //Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
-
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if(location!=null && !chosen1)
-        {
-            lat = location.getLatitude();
-            lng = location.getLongitude();
             //Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
             List<DemoItem> items = new ArrayList<>();
             List<Shop> shops = db.getShops(lat,lng);
@@ -255,27 +277,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 }
             });
-            ImageButton imageButton3 = (ImageButton) findViewById(R.id.button3);
-            imageButton3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
-                    startActivity(intent, bndlanimation);
 
-                }
-            });
+        }
+    }
 
-            ImageButton imageButton2 = (ImageButton) findViewById(R.id.button2);
-            imageButton2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3, R.anim.animation4).toBundle();
-                    startActivity(intent, bndlanimation);
-                }
-            });
+    @Override
+    public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(location!=null && !chosen1)
+        {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            //Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
         }
     }
 }
