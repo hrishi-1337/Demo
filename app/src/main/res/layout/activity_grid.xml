@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GridActivity">
+    <com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="3dp"
+        android:fadingEdge="none"
+        android:focusable="false"
+        android:gravity="center"
+        android:listSelector="#00000000"
+        android:layout_alignParentBottom="true">
 
-
-    <!-- List View -->
-
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:isScrollContainer="false"/>
+    </com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -35,7 +39,8 @@
             android:background="#3f51b5"
             android:scaleType="fitCenter"
             android:src="@drawable/nearme"
-            android:text="Near You" />
+            android:text="Near You"
+            android:tint="#000"/>
 
         <ImageButton
             android:id="@+id/button2"
@@ -46,19 +51,17 @@
             android:background="#3f51b5"
             android:scaleType="fitCenter"
             android:src="@drawable/search"
-            android:text="Search"
-            android:tint="#000"/>
+            android:text="Search" />
 
         <ImageButton
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
             android:background="#3f51b5"
-            android:scaleType="fitCenter"
+            android:text="Account"
             android:src="@drawable/account"
-            android:text="Account" />
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
     </LinearLayout>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,6 @@
 package com.hrishikesh.Demo;
 
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -95,9 +94,9 @@ public class ProfileActivity extends AppCompatActivity {
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation1,R.anim.animation2).toBundle();
-                startActivity(intent, bndlanimation);
+                Intent intent = new Intent(ProfileActivity.this, GridActivity.class);
+                //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left1,R.anim.left2).toBundle();
+                startActivity(intent);
 
             }
         });
@@ -107,8 +106,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, SearchActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation1,R.anim.animation2).toBundle();
-                startActivity(intent, bndlanimation);
+                //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left1,R.anim.left2).toBundle();
+                startActivity(intent);
 
             }
         });

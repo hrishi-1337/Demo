@@ -1,6 +1,5 @@
 package com.hrishikesh.Demo;
 
-import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -45,9 +44,9 @@ public class SearchActivity extends AppCompatActivity {
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation1,R.anim.animation2).toBundle();
-                startActivity(intent, bndlanimation);
+                Intent intent = new Intent(SearchActivity.this, GridActivity.class);
+                //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left1,R.anim.left2).toBundle();
+                startActivity(intent);
 
             }
         });
@@ -57,8 +56,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation3,R.anim.animation4).toBundle();
-                startActivity(intent, bndlanimation);
+                //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1,R.anim.right2).toBundle();
+                startActivity(intent);
 
             }
         });

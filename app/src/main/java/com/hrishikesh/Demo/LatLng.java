@@ -1,11 +1,12 @@
 package com.hrishikesh.Demo;
 
 import android.app.Application;
+
 /**
- * Created by j on 20-09-2017.
+ * Created by j on 21-09-2017.
  */
 
-public class Persist extends Application {
+public class LatLng extends Application {
 
     private double lat;
     private double lng;
@@ -16,9 +17,9 @@ public class Persist extends Application {
         return lat;
     }
 
-    public void setLat(double aLat) {
+    public void setLat(double Lat) {
 
-        lat = aLat;
+        lat = Lat;
 
     }
 
@@ -27,9 +28,8 @@ public class Persist extends Application {
         return lng;
     }
 
-    public void setLng(double aLng) {
+    public void setLng(double Lng) {
 
-        lng = aLng;
+        lng = Lng;
     }
-
 }

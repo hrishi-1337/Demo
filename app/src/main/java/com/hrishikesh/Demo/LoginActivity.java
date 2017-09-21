@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             FirebaseUser user = task.getResult().getUser();
                             Toast.makeText(LoginActivity.this, "Login Successful.",
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, GridActivity.class));
                             finish();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -235,7 +235,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 firebaseAuthWithGoogle(account);
                 Toast.makeText(LoginActivity.this, "Login Successful.",
                         Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, GridActivity.class));
             } else {
                 // Google Sign In failed, update UI appropriately
             }
@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
             case R.id.skip:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, GridActivity.class));
                 break;
         }
     }

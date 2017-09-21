@@ -302,7 +302,7 @@ public class LocationActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.map_item:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, GridActivity.class);
                 chosen = true;
                 mPosition = mGoogleMap.getCameraPosition().target;
                 chosenLat = mPosition.latitude;

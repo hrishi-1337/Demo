@@ -19,4 +19,8 @@
         <item name="android:textColor">#FFF</item>
     </style>
 
+    <style name="noAnimTheme" parent="@style/AppTheme">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
 </resources>
