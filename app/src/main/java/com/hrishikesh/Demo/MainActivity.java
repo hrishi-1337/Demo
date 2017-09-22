@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -71,7 +70,7 @@ public class MainActivity  extends AppCompatActivity implements GoogleApiClient.
             ((LatLng) this.getApplication()).setLng(lng);
             //}
             //LatLng loc = new LatLng(lat, lng);
-            Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, lat + " or " + lng, Toast.LENGTH_LONG).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

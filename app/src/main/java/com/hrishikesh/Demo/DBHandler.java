@@ -152,4 +152,27 @@ public class DBHandler extends SQLiteOpenHelper {
         double tt = Math.acos(t1 + t2 + t3);
         return 6366000*tt;
     }
+    public List<Shop> getSearch(String name) {
+        List<Shop> shopList = new ArrayList<Shop>();
+// Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_SHOPS +" WHERE "+KEY_NAME+" LIKE '%"+name+"%' ORDER BY CASE WHEN "+KEY_NAME+" LIKE '"+name+"%' THEN 1 WHEN "+KEY_NAME+" LIKE '%"+name+"' THEN 3 ELSE 2 END";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+// looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Shop shop = new Shop();
+                shop.setId(Integer.parseInt(cursor.getString(0)));
+                shop.setName(cursor.getString(1));
+                shop.setAddress(cursor.getString(2));
+                shop.setUrl(cursor.getString(3));
+                shop.setLat(cursor.getDouble(4));
+                shop.setLng(cursor.getDouble(5));
+// Adding contact to list
+                shopList.add(shop);
+            } while (cursor.moveToNext());
+        }
+// return contact list
+        return shopList;
+    }
 }
