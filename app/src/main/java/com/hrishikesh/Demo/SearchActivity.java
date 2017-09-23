@@ -99,8 +99,12 @@ public class SearchActivity extends AppCompatActivity {
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                    String yourData = list.get(position);
-                    //Toast.makeText(SearchActivity.this,yourData, Toast.LENGTH_LONG).show();
+                    String name = list.get(position);
+                    Intent intent = new Intent(SearchActivity.this, ShopActivity.class);
+                    intent.putExtra("name",name);
+                    //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1, R.anim.right2)
+                    //Toast.makeText(getContext(), name, Toast.LENGTH_LONG).show();
+                    startActivity(intent);
                 }
             });
         }

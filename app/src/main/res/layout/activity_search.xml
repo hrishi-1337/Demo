@@ -15,7 +15,8 @@
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:isScrollContainer="false"/>
+        android:isScrollContainer="false"
+        android:layout_above="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -23,8 +24,7 @@
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        app:layout_behavior=".QuickReturnFooterBehavior">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/button1"
@@ -47,7 +47,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/search"
             android:text="Search"
-            android:tint="#000"/>
+            android:tint="#000" />
 
         <ImageButton
             android:id="@+id/button3"

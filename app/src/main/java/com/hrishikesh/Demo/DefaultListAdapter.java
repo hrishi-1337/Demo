@@ -5,6 +5,7 @@ package com.hrishikesh.Demo;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class DefaultListAdapter extends ArrayAdapter<DemoItem> implements DemoAd
         } else {
             v = convertView;
         }
+        final String name = item.getText();
 
         TextView textView;
         textView = (TextView) v.findViewById(R.id.textview);
@@ -61,6 +63,11 @@ public class DefaultListAdapter extends ArrayAdapter<DemoItem> implements DemoAd
                     view.setScaleY(1);
                     view.setScaleX(1);
                 }
+                Intent intent = new Intent(getContext(), ShopActivity.class);
+                intent.putExtra("name",name);
+                //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1, R.anim.right2)
+                //Toast.makeText(getContext(), name, Toast.LENGTH_LONG).show();
+                getContext().startActivity(intent);
             }
         });
         return v;
