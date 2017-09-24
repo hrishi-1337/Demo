@@ -34,9 +34,7 @@ public class GridActivity extends AppCompatActivity {
     double lat,lng;
     double chosenLat,chosenLng;
     boolean chosen1 = false;
-    boolean start;
     DBHandler db = new DBHandler(this);
-    List<Shop> shops;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
