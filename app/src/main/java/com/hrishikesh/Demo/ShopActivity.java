@@ -3,12 +3,15 @@ package com.hrishikesh.Demo;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 
 public class ShopActivity extends AppCompatActivity {
@@ -19,7 +22,9 @@ public class ShopActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
 
     String name,url;
+    List<Product> products;
     DBHandler db = new DBHandler(this);
+    ProductDBHandler db2 = new ProductDBHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +56,12 @@ public class ShopActivity extends AppCompatActivity {
                 ShopActivity.super.onBackPressed();
             }
         });
-/*
-        List list = getList();
-        RecyclerAdapter adapter = new RecyclerAdapter(this,list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        products = db2.getAllProducts();
+        int numberOfColumns = 2;
+        ProductAdapter adapter = new ProductAdapter(this,products);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
-        */
 
     }
-/*
-    private List getList() {
-        List list = new ArrayList<>();
-        for (int i = 0; i < imageUrl.length; i++) {
-            ItemModel model = new ItemModel();
-            model.setName(names[i]);
-            model.setImagePath(imageUrl[i]);
-            list.add(model);
-        }
-        return list;
-    } */
 }

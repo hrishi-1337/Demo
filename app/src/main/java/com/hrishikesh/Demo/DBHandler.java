@@ -37,7 +37,6 @@ public class DBHandler extends SQLiteOpenHelper {
         + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
         + KEY_SH_ADDR + " TEXT," + KEY_SH_URL + " TEXT," +LAT + " TEXT," + LNG + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

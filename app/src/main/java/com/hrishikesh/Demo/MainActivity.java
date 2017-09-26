@@ -33,6 +33,7 @@ public class MainActivity  extends AppCompatActivity implements GoogleApiClient.
     double lat,lng;
     boolean firstRun;
     DBHandler db = new DBHandler(this);
+    ProductDBHandler db2 = new ProductDBHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,11 @@ public class MainActivity  extends AppCompatActivity implements GoogleApiClient.
                             db.addShop(new Shop(i, "Pizza Parlor", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download.jpg?alt=media&token=1eb9a9bb-495d-416b-9a84-3699214149b9", 19.122123, 72.827567));
                             db.addShop(new Shop(i, "Town Bakers", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download%20(1).jpg?alt=media&token=01b16918-272f-4a9f-9607-61f559d30360", 19.151315, 77.573661));
                         }
+                        db2.addProduct(new Product(1,"501® ORIGINAL FIT JEANS","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/005010194-front-grid.jpg?alt=media&token=b45b097f-a911-4f8b-a932-a40a02afa84c",0.0));
+                        db2.addProduct(new Product(1,"511™ SLIM FIT STRETCH JEANS","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/045114406-front-grid.jpg?alt=media&token=ff750d17-1577-42df-819e-568fa2905381",0.0));
+                        db2.addProduct(new Product(1,"505™ REGULAR FIT JEANS","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/005054886-front-grid.jpg?alt=media&token=87ee1dfa-3015-4106-b80c-da2a9c1b0883",0.0));
+                        db2.addProduct(new Product(1,"541™ ATHLETIC FIT STRETCH JEANS","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/181810014-front-grid.jpg?alt=media&token=97f1dde6-81bc-4e0e-b56b-aa9ce5221a01",0.0));
+                        db2.addProduct(new Product(1,"512™ SLIM TAPER FIT STRETCH JEANS","https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/288330008-front-grid.jpg?alt=media&token=4aa6c26d-9ca8-410f-b253-6622990c192a",0.0));
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
 
