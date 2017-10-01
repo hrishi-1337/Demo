@@ -3,6 +3,7 @@ package com.hrishikesh.Demo;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -60,7 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         });
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(final View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
@@ -75,28 +76,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                         scaleDown.start();
 
+                    final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                        v, "scaleX", 1f);
+                                ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                        v, "scaleY", 1f);
+                                scaleDownX2.setDuration(200);
+                                scaleDownY2.setDuration(200);
+
+                                AnimatorSet scaleDown2 = new AnimatorSet();
+                                scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                                scaleDown2.start();
+                            }
+                        }, 300);
+
                         break;
-
-                    case MotionEvent.ACTION_UP:
-                        ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
-                                v, "scaleX", 1f);
-                        ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
-                                v, "scaleY", 1f);
-                        scaleDownX2.setDuration(200);
-                        scaleDownY2.setDuration(200);
-
-                        AnimatorSet scaleDown2 = new AnimatorSet();
-                        scaleDown2.play(scaleDownX2).with(scaleDownY2);
-
-                        scaleDown2.start();
-
-                        /*
-                        Intent intent = new Intent(getContext(), ShopActivity.class);
-                        intent.putExtra("name",name);
-                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) getContext(), imageView, "profile");
-                        getContext().startActivity(intent, options.toBundle());
-                        break;
-                        */
                 }
                 return true;
             }
