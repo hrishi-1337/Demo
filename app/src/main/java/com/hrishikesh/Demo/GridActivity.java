@@ -17,6 +17,11 @@ import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridViewAdapter;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,9 @@ public class GridActivity extends AppCompatActivity {
     double chosenLat,chosenLng;
     boolean chosen1 = false;
     DBHandler db = new DBHandler(this);
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mRef = database.getReference();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,10 +232,29 @@ public class GridActivity extends AppCompatActivity {
 
        // if (start) {
             List<DemoItem> items = new ArrayList<>();
-            List<Shop> shops = db.getShops(lat,lng);
+            //List<Shop> shops = db.getShops(lat,lng);
+            final List<Shop> mShops = new ArrayList<>();
+            mRef.child("shops").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
+                        Shop data = noteSnapshot.getValue(Shop.class);
+                        Log.e("log", data.getName()+" "+data.getUrl());
+                        mShops.add(data);
+                    }
+                 }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("LOG", databaseError.getMessage());
+                }
+            });
+            for (Shop shop : mShops) {
+                Log.e("mShops", shop.getName()+" "+shop.getUrl());
+            }
             int a[] = {4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 4, 2, 2, 2, 3, 3};
             int j = 0;
-            for (Shop shop : shops) {
+            for (Shop shop : mShops) {
                 if (j <= 15) {
                     DemoItem item = new DemoItem(a[j], a[j], shop.getId(), shop.getName(), shop.getUrl());
                     items.add(item);
