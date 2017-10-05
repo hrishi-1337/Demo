@@ -34,7 +34,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, GridActivity.class);
                 //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left1,R.anim.left2).toBundle();
-                startActivity(intent);
+                //startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
 
             }
         });
@@ -45,7 +47,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
                 //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1,R.anim.right2).toBundle();
-                startActivity(intent);
+                //startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
 
             }
         });

@@ -85,7 +85,7 @@ public class MainActivity  extends AppCompatActivity implements GoogleApiClient.
                     {
                         // Code to run once
                         for(int i =1 ;i <=10 ;i++) {
-                            db.addShop(new Shop(i, "Dockers", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/storefront27.jpg?alt=media&token=4ea27811-4e06-4bf5-8b96-44a583040088", 19.172151, 72.873733));
+                            db.addShop(new Shop(i, "Levi's", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/storefront27.jpg?alt=media&token=4ea27811-4e06-4bf5-8b96-44a583040088", 19.172151, 72.873733));
                             db.addShop(new Shop(i, "Dunkin Donuts", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/dunkin.jpg?alt=media&token=f63c6d5f-b074-47ae-a8ca-6f7974ddbd47", 19.174745, 72.835120));
                             db.addShop(new Shop(i, "Pizza Parlor", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download.jpg?alt=media&token=1eb9a9bb-495d-416b-9a84-3699214149b9", 19.122123, 72.827567));
                             db.addShop(new Shop(i, "Town Bakers", "", "https://firebasestorage.googleapis.com/v0/b/fir-87605.appspot.com/o/download%20(1).jpg?alt=media&token=01b16918-272f-4a9f-9607-61f559d30360", 19.151315, 77.573661));

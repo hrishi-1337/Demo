@@ -3,6 +3,7 @@ package com.hrishikesh.Demo;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,11 +18,11 @@ import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridViewAdapter;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,24 +40,99 @@ public class GridActivity extends AppCompatActivity {
     double lat,lng;
     double chosenLat,chosenLng;
     boolean chosen1 = false;
-    DBHandler db = new DBHandler(this);
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mRef = database.getReference();
-
+    //DBHandler db = new DBHandler(this);
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
         listView = (AsymmetricGridView) findViewById(R.id.listView);
-      /*  if (savedInstanceState == null) {
-            //adapter = new DefaultListAdapter(this, getMoreItems(50));
-            start = true;
 
-        } else {
-            //adapter = new DefaultListAdapter(this);
-            start = false;
-        } */
+        final List<DemoItem> items = new ArrayList<>();
+        //List<Shop> shops = db.getShops(lat,lng);
+        final List<Shop> mShops = new ArrayList<Shop>();
+        db.collection("Shops")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int a[] = {4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 4, 2, 2, 2, 3, 3};
+                            int j = 0;
+                            int i = 0;
+                            for (DocumentSnapshot document : task.getResult()) {
+                                //Shop shop = document.toObject(Shop.class);
+                                //mShops.add(shop);
+                                i++;
+                                if (j <= 15) {
+                                    DemoItem item = new DemoItem(a[j], a[j], i, document.getString("Name"), document.getString("Url"));
+                                    items.add(item);
+                                    j++;
+                                } else{
+                                    j = 1;
+                                    DemoItem item = new DemoItem(a[0], a[0], i, document.getString("Name"),document.getString("Url"));
+                                    items.add(item);
+                                }
+                            }
+
+                            for (DemoItem item : items) {
+                                Log.e("shops",item.getText()+" "+item.getUrl());
+
+                            }
+                            //adapter = new DefaultListAdapter(GridActivity.this,items);
+                            if (savedInstanceState == null) {
+                                adapter = new DefaultListAdapter(GridActivity.this, items);
+
+
+                            } else {
+                                adapter = new DefaultListAdapter(GridActivity.this);
+
+                            }
+
+                            listView.setRequestedColumnCount(6);
+                            listView.setRequestedHorizontalSpacing(Utils.dpToPx(GridActivity.this, 3));
+                            listView.setAdapter(getNewAdapter());
+                            listView.setDebugging(true);
+                            listView.setNestedScrollingEnabled(true);
+                            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                private int mLastFirstVisibleItem;
+
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                                }
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem,
+                                                     int visibleItemCount, int totalItemCount) {
+
+                                    if (mLastFirstVisibleItem < firstVisibleItem) {
+                                        Log.i("SCROLLING DOWN", "TRUE");
+                                    }
+                                    if (mLastFirstVisibleItem > firstVisibleItem) {
+                                        Log.i("SCROLLING UP", "TRUE");
+                                    }
+                                    mLastFirstVisibleItem = firstVisibleItem;
+
+                                }
+                            });
+                        } else {
+                            Log.e("Log", "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
+
+      /*  if (savedInstanceState == null) {
+                                adapter = new DefaultListAdapter(GridActivity.this, items);
+
+
+                            } else {
+                                adapter = new DefaultListAdapter(GridActivity.this);
+
+                            }*/
 
 /*
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -88,7 +164,9 @@ public class GridActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GridActivity.this, ProfileActivity.class);
                 //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1, R.anim.right2).toBundle();
-                startActivity(intent);
+                //startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
 
             }
         });
@@ -99,7 +177,9 @@ public class GridActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GridActivity.this, SearchActivity.class);
                 //Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.right1, R.anim.right2).toBundle();
-                startActivity(intent);
+                //startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
             }
         });
 
@@ -164,7 +244,7 @@ public class GridActivity extends AppCompatActivity {
     }
 
     private AsymmetricGridViewAdapter<?> getNewAdapter() {
-        return new AsymmetricGridViewAdapter<>(this, listView, adapter);
+        return new AsymmetricGridViewAdapter<>(GridActivity.this, listView, adapter);
     }
 /*
    private List<DemoItem> getMoreItems(int qty) {
@@ -231,70 +311,22 @@ public class GridActivity extends AppCompatActivity {
     public void grid(double lat,double lng){
 
        // if (start) {
-            List<DemoItem> items = new ArrayList<>();
-            //List<Shop> shops = db.getShops(lat,lng);
-            final List<Shop> mShops = new ArrayList<>();
-            mRef.child("shops").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
-                        Shop data = noteSnapshot.getValue(Shop.class);
-                        Log.e("log", data.getName()+" "+data.getUrl());
-                        mShops.add(data);
-                    }
-                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.d("LOG", databaseError.getMessage());
-                }
-            });
-            for (Shop shop : mShops) {
-                Log.e("mShops", shop.getName()+" "+shop.getUrl());
-            }
-            int a[] = {4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 4, 2, 2, 2, 3, 3};
-            int j = 0;
-            for (Shop shop : mShops) {
-                if (j <= 15) {
-                    DemoItem item = new DemoItem(a[j], a[j], shop.getId(), shop.getName(), shop.getUrl());
-                    items.add(item);
-                    j++;
-                } else
-                    j = 0;
-            }
-            adapter = new DefaultListAdapter(this,items);
+
+            //List<Shop> shops = FirebaseHandler.getShop(lat,lng);
+
 
 
         //} else {
             //adapter = new DefaultListAdapter(this);
         //}
 
-        listView.setRequestedColumnCount(6);
-        listView.setRequestedHorizontalSpacing(Utils.dpToPx(this, 3));
-        listView.setAdapter(getNewAdapter());
-        listView.setDebugging(true);
-        listView.setNestedScrollingEnabled(true);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int mLastFirstVisibleItem;
 
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
 
-            }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-
-                if (mLastFirstVisibleItem < firstVisibleItem) {
-                    Log.i("SCROLLING DOWN", "TRUE");
-                }
-                if (mLastFirstVisibleItem > firstVisibleItem) {
-                    Log.i("SCROLLING UP", "TRUE");
-                }
-                mLastFirstVisibleItem = firstVisibleItem;
-
-            }
-        });
     }
 }
